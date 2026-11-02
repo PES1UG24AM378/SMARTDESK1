@@ -1,0 +1,23 @@
+digraph Arch {
+  rankdir=TB; splines=true; nodesep=0.35; ranksep=0.55; bgcolor="white"; pad=0.25;
+  node [shape=box, style="rounded,filled", fontname="Helvetica", fontsize=12, color="#f97316", fillcolor="#fff7ed", penwidth=1.5];
+  edge [fontname="Helvetica", fontsize=10, color="#9a3412"];
+
+  browser [label="Browser\nNext.js pages\n(white and orange UI)", fillcolor="#f97316", fontcolor="white"];
+  subgraph cluster_server {
+    label="Next.js server (Node.js)"; fontname="Helvetica"; fontsize=12; style="rounded"; color="#f97316";
+    api  [label="Route handlers\nlogin, validation,\nrole and ownership checks"];
+    svc  [label="Services\nticketService\nadminService"];
+    dec  [label="decide.js\nsuggest / route / triage"];
+    emb  [label="embeddings.js\nMiniLM (local,\npre-trained)"];
+    exp  [label="explain.js\nGemini RAG step\n(optional)"];
+  }
+  pg  [label="PostgreSQL + pgvector\ntables, constraints, triggers,\nprocedures, views, indexes", shape=cylinder, fillcolor="#ffedd5"];
+  gem [label="Gemini API", fillcolor="#f97316", fontcolor="white"];
+
+  browser -> api [label="  JSON + httpOnly cookie"];
+  api -> svc;
+  svc -> dec; svc -> emb; svc -> exp;
+  svc -> pg [label="parameterized SQL\ntransactions"];
+  exp -> gem [label="HTTPS, personal data removed"];
+}

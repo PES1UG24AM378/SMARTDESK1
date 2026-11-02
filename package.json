@@ -1,0 +1,36 @@
+{
+  "name": "smartdesk",
+  "version": "1.0.0",
+  "private": true,
+  "description": "SmartDesk - Semantic IT & Facilities Helpdesk (DBMS Level 3 project)",
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "db:reset": "node --env-file=.env.local scripts/reset-db.js",
+    "embed": "node --env-file=.env.local scripts/embed.js",
+    "eval": "node --env-file=.env.local scripts/run-eval.js",
+    "test": "node --test tests/*.test.js",
+    "test:db": "node --env-file=.env.local scripts/check-db.js",
+    "test:api": "node --env-file=.env.local scripts/check-api.js",
+    "test:concurrency": "node --env-file=.env.local scripts/check-concurrency.js",
+    "perf": "node --env-file=.env.local scripts/perf-index.js",
+    "docs:dictionary": "node --env-file=.env.local scripts/generate-data-dictionary.js",
+    "seed:generate": "node scripts/generate-seed.js",
+    "scheduler": "node --env-file=.env.local scripts/sla-scheduler.js"
+  },
+  "dependencies": {
+    "@google/genai": "^1.0.0",
+    "@neon/config": "^1.10.0",
+    "@neon/env": "^1.6.8",
+    "@xenova/transformers": "^2.17.2",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2",
+    "next": "^14.2.0",
+    "pg": "^8.11.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "zod": "^3.23.8"
+  }
+}

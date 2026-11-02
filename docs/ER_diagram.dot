@@ -1,0 +1,91 @@
+digraph SmartDesk {
+  graph [rankdir=LR, splines=true, nodesep=0.55, ranksep=1.1, fontname="Helvetica", bgcolor="white", pad=0.3];
+  node  [shape=plaintext, fontname="Helvetica", fontsize=11];
+  edge  [fontname="Helvetica", fontsize=10, color="#9a3412", arrowsize=0.7];
+
+  departments [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4" color="#f97316">
+    <tr><td bgcolor="#f97316"><font color="white"><b>departments</b></font></td></tr>
+    <tr><td align="left"><b>PK dept_id</b></td></tr>
+    <tr><td align="left">name (UNIQUE)</td></tr></table>>];
+
+  sla_policies [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4" color="#f97316">
+    <tr><td bgcolor="#f97316"><font color="white"><b>sla_policies</b></font></td></tr>
+    <tr><td align="left"><b>PK priority</b></td></tr>
+    <tr><td align="left">resolution_hours (&gt; 0)</td></tr></table>>];
+
+  users [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4" color="#f97316">
+    <tr><td bgcolor="#f97316"><font color="white"><b>users</b></font></td></tr>
+    <tr><td align="left"><b>PK user_id</b></td></tr>
+    <tr><td align="left">name</td></tr>
+    <tr><td align="left">email (UNIQUE, format CHECK)</td></tr>
+    <tr><td align="left">password_hash (bcrypt)</td></tr>
+    <tr><td align="left">role (Employee | Technician | Admin)</td></tr>
+    <tr><td align="left">is_active</td></tr>
+    <tr><td align="left">created_at</td></tr></table>>];
+
+  technicians [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4" color="#f97316">
+    <tr><td bgcolor="#f97316"><font color="white"><b>technicians</b></font></td></tr>
+    <tr><td align="left"><b>PK tech_id</b></td></tr>
+    <tr><td align="left"><i>FK user_id (UNIQUE)</i></td></tr>
+    <tr><td align="left"><i>FK dept_id</i></td></tr>
+    <tr><td align="left">UNIQUE (tech_id, dept_id)</td></tr></table>>];
+
+  tickets [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4" color="#ea580c">
+    <tr><td bgcolor="#ea580c"><font color="white"><b>tickets</b></font></td></tr>
+    <tr><td align="left"><b>PK ticket_id</b></td></tr>
+    <tr><td align="left"><i>FK user_id</i> (requester)</td></tr>
+    <tr><td align="left"><i>FK dept_id</i></td></tr>
+    <tr><td align="left"><i>FK (tech_id, dept_id)</i> -&gt; technicians</td></tr>
+    <tr><td align="left"><i>FK priority</i> -&gt; sla_policies</td></tr>
+    <tr><td align="left">description (10 to 2000 chars)</td></tr>
+    <tr><td align="left">status (Open | In Progress | Resolved)</td></tr>
+    <tr><td align="left">resolution_text, resolution_verified</td></tr>
+    <tr><td align="left">created_at, resolved_at, sla_deadline</td></tr>
+    <tr><td align="left" bgcolor="#fff7ed">embedding vector(384)</td></tr>
+    <tr><td align="left" bgcolor="#fff7ed">search_tsv tsvector (generated)</td></tr></table>>];
+
+  ticket_status_log [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4" color="#f97316">
+    <tr><td bgcolor="#f97316"><font color="white"><b>ticket_status_log</b></font></td></tr>
+    <tr><td align="left"><b>PK log_id</b></td></tr>
+    <tr><td align="left"><i>FK ticket_id</i></td></tr>
+    <tr><td align="left">old_status, new_status</td></tr>
+    <tr><td align="left"><i>FK changed_by</i> -&gt; users</td></tr>
+    <tr><td align="left">changed_at</td></tr></table>>];
+
+  sla_alerts [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4" color="#f97316">
+    <tr><td bgcolor="#f97316"><font color="white"><b>sla_alerts</b></font></td></tr>
+    <tr><td align="left"><b>PK alert_id</b></td></tr>
+    <tr><td align="left"><i>FK ticket_id</i></td></tr>
+    <tr><td align="left">alert_type</td></tr>
+    <tr><td align="left">UNIQUE (ticket_id, alert_type)</td></tr></table>>];
+
+  ticket_suggestions [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4" color="#f97316">
+    <tr><td bgcolor="#f97316"><font color="white"><b>ticket_suggestions</b></font></td></tr>
+    <tr><td align="left"><b>PK suggestion_id</b></td></tr>
+    <tr><td align="left"><i>FK ticket_id (UNIQUE)</i></td></tr>
+    <tr><td align="left"><i>FK source_ticket_id</i> -&gt; tickets</td></tr>
+    <tr><td align="left"><i>FK predicted_dept_id</i></td></tr>
+    <tr><td align="left">mode, similarity, retrieved_ids[]</td></tr>
+    <tr><td align="left">helpful</td></tr>
+    <tr><td align="left">explanation, explanation_status</td></tr></table>>];
+
+  ticket_deletions [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4" color="#f97316">
+    <tr><td bgcolor="#f97316"><font color="white"><b>ticket_deletions</b></font></td></tr>
+    <tr><td align="left"><b>PK deletion_id</b></td></tr>
+    <tr><td align="left">ticket_id (no FK: row is gone)</td></tr>
+    <tr><td align="left"><i>FK deleted_by</i> -&gt; users</td></tr>
+    <tr><td align="left">description, status, deleted_at</td></tr></table>>];
+
+  users -> technicians [label="1 : 0..1", headlabel=""];
+  departments -> technicians [label="1 : N"];
+  departments -> tickets [label="1 : N"];
+  users -> tickets [label="1 : N (reports)"];
+  technicians -> tickets [label="1 : N (assigned)"];
+  sla_policies -> tickets [label="1 : N"];
+  tickets -> ticket_status_log [label="1 : N"];
+  users -> ticket_status_log [label="1 : N (changed_by)"];
+  tickets -> sla_alerts [label="1 : N"];
+  tickets -> ticket_suggestions [label="1 : 1"];
+  departments -> ticket_suggestions [label="1 : N (predicted)"];
+  users -> ticket_deletions [label="1 : N (deleted_by)"];
+}
