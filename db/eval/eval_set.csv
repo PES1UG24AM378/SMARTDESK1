@@ -1,0 +1,57 @@
+id,text,true_dept,should_triage
+1,My internet drops every few minutes in the west wing,IT Network,0
+2,Unable to reach the company intranet from home laptop,IT Network,0
+3,Wireless signal is very weak near the cafeteria,IT Network,0
+4,Network folder on the server shows access denied,IT Network,0
+5,Cable is plugged into the wall port but there is no connectivity,IT Network,0
+6,Video calls keep freezing because the internet is lagging,IT Network,0
+7,"Cannot log into VPN, it keeps saying credentials rejected",IT Network,0
+8,Wifi does not show up on my phone in the training room,IT Network,0
+9,My laptop turns off by itself when it gets warm,IT Hardware,0
+10,The office printer prints pages with black streaks,IT Hardware,0
+11,Second screen goes black every few seconds,IT Hardware,0
+12,Notebook battery only lasts about twenty minutes now,IT Hardware,0
+13,Printer says paper jam but the tray is empty,IT Hardware,0
+14,Laptop is plugged in but the charging light never comes on,IT Hardware,0
+15,Monitor displays vertical coloured lines,IT Hardware,0
+16,Desktop restarts on its own and the cooling fan is very loud,IT Hardware,0
+17,I am locked out of my account after typing the wrong password,IT Software,0
+18,Outlook crashes every time I open it,IT Software,0
+19,Excel says my Microsoft Office licence has expired,IT Software,0
+20,Laptop takes forever to start and applications hang,IT Software,0
+21,Email stays in the outbox and will not go out,IT Software,0
+22,Windows keeps installing an update and gets stuck,IT Software,0
+23,I need permission to install a design application on my machine,IT Software,0
+24,Password reset email never arrives,IT Software,0
+25,The tube light over my desk keeps blinking,Facilities Electrical,0
+26,There is no electricity at my cubicle socket,Facilities Electrical,0
+27,Ceiling fan in the meeting room makes a rattling noise and shakes,Facilities Electrical,0
+28,UPS in the lab keeps beeping every minute,Facilities Electrical,0
+29,Smell of burning from the electrical switch panel,Facilities Electrical,0
+30,All the corridor lights are off on the second floor,Facilities Electrical,0
+31,Power socket is giving sparks when I plug in a charger,Facilities Electrical,0
+32,Backup battery did not take over during the power cut,Facilities Electrical,0
+33,Air conditioner in the conference hall is not cold enough,Facilities HVAC,0
+34,The AC unit is dripping water onto the carpet,Facilities HVAC,0
+35,Loud rattling from the air conditioner in room 5,Facilities HVAC,0
+36,It is boiling hot in the server room even though cooling is on,Facilities HVAC,0
+37,Thermostat panel does not respond when I change the temperature,Facilities HVAC,0
+38,Pantry exhaust fan has stopped and the smell stays,Facilities HVAC,0
+39,Office is freezing and we cannot control the cooling,Facilities HVAC,0
+40,Air conditioner blows only warm air in my cabin,Facilities HVAC,0
+41,Water is dripping from the tap in the kitchenette all day,Facilities Plumbing & Civil,0
+42,Rain water comes through the ceiling above my workstation,Facilities Plumbing & Civil,0
+43,Toilet will not flush on the first floor,Facilities Plumbing & Civil,0
+44,The sink in the pantry is blocked and water is not draining,Facilities Plumbing & Civil,0
+45,No running water in the men's restroom,Facilities Plumbing & Civil,0
+46,Water pressure is very low in the upstairs washroom,Facilities Plumbing & Civil,0
+47,Drinking water machine on our floor is not working,Facilities Plumbing & Civil,0
+48,Damp patch spreading on the wall near the window,Facilities Plumbing & Civil,0
+49,I would like a standing desk for my workstation,,1
+50,Please renew my parking sticker for next year,,1
+51,Book the board room for Friday afternoon,,1
+52,The food in the cafeteria was cold today,,1
+53,Something is not working,,1
+54,I need a new employee ID card,,1
+55,Please update the seating plan for the new joiners,,1
+56,AC is off and the internet is also down in the same room,,1
